@@ -1,0 +1,59 @@
+// Estilos generales para el Navbar
+.navbar {
+    background-color: #f8f9fa; 
+    border-bottom: 1px solid #dee2e6; 
+  
+    &-brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #007bff;
+  
+      &:hover {
+        color: #0056b3; 
+      }
+    }
+  
+    &-toggle {
+      border: none;
+      background-color: transparent;
+  
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  
+    &-collapse {
+      justify-content: flex-end;
+    }
+  }
+  
+  
+  .nav-link {
+    color: #343a40;
+    font-size: 1rem;
+    margin: 0 10px;
+  
+    &:hover {
+      color: #007bff;
+      text-decoration: underline;
+    }
+  }
+  
+  .dropdown-menu {
+    background-color: #ffffff; 
+    border: 1px solid #dee2e6; 
+  
+    .dropdown-item {
+      color: #343a40;
+  
+      &:hover {
+        background-color: #007bff;
+        color: #ffffff;
+      }
+    }
+  }
+  
+  .container {
+    max-width: 1200px;
+    padding: 0 15px;
+  }

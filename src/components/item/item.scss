@@ -1,0 +1,41 @@
+.card {
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  
+    &-img {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+  
+    &-body {
+      padding: 20px;
+      text-align: center;
+    }
+  
+    &-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: #343a40;
+      margin-bottom: 15px;
+    }
+  
+    &-text {
+      font-size: 1rem;
+      color: #6c757d;
+      margin-bottom: 20px;
+    }
+  }
+  
+  .btn-primary {
+    background-color: #007bff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #0056b3;
+    }
+  }
