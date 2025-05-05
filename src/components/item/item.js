@@ -1,20 +1,20 @@
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { removeTodo } from '../../reducers/todoSlice';
 
-function item() {
+const Item = ({ name }) => {
+  const dispatch = useDispatch();
+
+  const handleRemove = () => {
+    dispatch(removeTodo(name)); 
+  };
+
   return (
-    <Card style={{ width: '18rem' }}>
-      <Card.Img variant="top" src="holder.js/100px180" />
-      <Card.Body>
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>
-          Some quick example text to build on the card title and make up the
-          bulk of the card's content.
-        </Card.Text>
-        <Button variant="primary">Go somewhere</Button>
-      </Card.Body>
-    </Card>
+    <div className="card">
+      <p>{name}</p>
+      <button onClick={handleRemove}>Eliminar tarea</button>
+    </div>
   );
-}
+};
 
-export default item;
+export default Item;

@@ -4,7 +4,7 @@ import './buttonMobile.scss'
 function buttonMobile() {
   return (
     <>
-      <Button variant="info" className='btn-addgoal'>Add Goal</Button>
+      <Button variant="info" className='btn-addgoal'>Añadir tarea</Button>
     </>
   );
 }
