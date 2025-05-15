@@ -29,6 +29,12 @@ router.get('/getTask', function (req, res, next) {
 
 router.delete('deleteTask/:id', function (req, res, next) {
     const TaskId = parseInt(req.params.id);
+    const task = tasks.find(task => task.id === TaskId);
+    if (!task) {
+        return res.status(400).json({ message: 'Task not found' });
+    } else {
+        res.status(200).json({ message: 'Task deleted successfully' });
+    }
     tasks = tasks.filter(task => task.id !== TaskId);
     res.json({message: 'Task deleted successfully'});
 });
