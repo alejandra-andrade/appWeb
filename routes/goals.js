@@ -1,6 +1,7 @@
 var express = require('express');
 const route = require('.');
 var router = express.Router();
+const Goal = require("../models/Goal");
 
 let goals = [
     {
@@ -23,26 +24,23 @@ let goals = [
     }
 ];
 
-router.get('/getGoal', function (req, res, next) {
-    res.json(goals);
+router.get("/getGoals", async (req, res) => {
+  const goals = await Goal.find();
+  res.json(goals);
 });
 
-router.delete('/deleteGoal/:id', function (req, res, next) {
-    const goalId = parseInt(req.params.id);
-    goals = goals.filter(goal => goal.id !== goalId);
-    res.json({ message: 'Goal deleted successfully' });
+
+router.post("/addGoal", async (req, res) => {
+  const { name, description, dueDate } = req.body;
+  const newGoal = new Goal({ name, description, dueDate });
+  await newGoal.save();
+  res.json({ message: "Meta agregada" });
 });
 
-router.post('/addGoal', function (req, res, next) {
-    const { name, description } = req.body;
-    const newGoal = {
-        id: goals.length + 1,
-        name,
-        description,
-        completed: false
-    };
-    goals.push(newGoal);
-    res.json(newGoal);
+
+router.delete("/removeGoal/:id", async (req, res) => {
+  await Goal.findByIdAndDelete(req.params.id);
+  res.json({ message: "Meta eliminada" });
 });
 
 module.exports = router;

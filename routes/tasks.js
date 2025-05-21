@@ -1,6 +1,7 @@
 var express = require('express');
 const route = require('.');
 var router = express.Router();
+const Task = require("../models/Task")
 
 let tasks = [
     {
@@ -22,33 +23,24 @@ let tasks = [
         completed: false
     }
 ];
-router.get('/getTask', function (req, res, next) {
-    res.json(tasks);
-    }      
-);
 
-router.delete('deleteTask/:id', function (req, res, next) {
-    const TaskId = parseInt(req.params.id);
-    const task = tasks.find(task => task.id === TaskId);
-    if (!task) {
-        return res.status(400).json({ message: 'Task not found' });
-    } else {
-        res.status(200).json({ message: 'Task deleted successfully' });
-    }
-    tasks = tasks.filter(task => task.id !== TaskId);
-    res.json({message: 'Task deleted successfully'});
+router.get("/getTasks", async (req, res) => {
+  const tasks = await Task.find();
+  res.json(tasks);
 });
 
-router.post('/addTask', function (req, res, next) {
-    const { name, description } = req.body;
-    const newTask = {
-        id: tasks.length + 1,
-        name,
-        description,
-        completed: false
-    };
-    tasks.push(newTask);
-    res.json(newTask);
+
+router.post("/addTask", async (req, res) => {
+  const { title, description, dueDate } = req.body;
+  const newTask = new Task({ title, description, dueDate });
+  await newTask.save();
+  res.json({ message: "Tarea agregada" });
+});
+
+
+router.delete("/removeTask/:id", async (req, res) => {
+  await Task.findByIdAndDelete(req.params.id);
+  res.json({ message: "Tarea eliminada" });
 });
 
 module.exports = router;
