@@ -25,22 +25,30 @@ let tasks = [
 ];
 
 router.get("/getTasks", async (req, res) => {
-  const tasks = await Task.find();
-  res.json(tasks);
+    const tasks = await Task.find();
+    res.status(200).json(tasks);
 });
-
 
 router.post("/addTask", async (req, res) => {
-  const { title, description, dueDate } = req.body;
-  const newTask = new Task({ title, description, dueDate });
-  await newTask.save();
-  res.json({ message: "Tarea agregada" });
+    const { name, dueDate } = req.body;
+    if (!name || !dueDate) {
+        return res.status(400).json({ error: "Bad Request - Parámetros inválidos" });
+    }
+
+    const newTask = new Task({ name, dueDate });
+    await newTask.save();
+    res.status(200).json({ message: "Tarea agregada", task: newTask });
 });
 
-
 router.delete("/removeTask/:id", async (req, res) => {
-  await Task.findByIdAndDelete(req.params.id);
-  res.json({ message: "Tarea eliminada" });
+    const { id } = req.params;
+    const deletedTask = await Task.findByIdAndDelete(id);
+
+    if (!deletedTask) {
+        return res.status(400).json({ error: "Bad Request - ID inválido" });
+    }
+
+    res.status(200).json({ message: "Tarea eliminada", task: deletedTask });
 });
 
 module.exports = router;

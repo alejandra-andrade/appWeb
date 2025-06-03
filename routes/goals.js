@@ -25,22 +25,30 @@ let goals = [
 ];
 
 router.get("/getGoals", async (req, res) => {
-  const goals = await Goal.find();
-  res.json(goals);
+    const goals = await Goal.find();
+    res.status(200).json(goals);
 });
-
 
 router.post("/addGoal", async (req, res) => {
-  const { name, description, dueDate } = req.body;
-  const newGoal = new Goal({ name, description, dueDate });
-  await newGoal.save();
-  res.json({ message: "Meta agregada" });
+    const { name, dueDate } = req.body;
+    if (!name || !dueDate) {
+        return res.status(400).json({ error: "Bad Request - Parámetros inválidos" });
+    }
+
+    const newGoal = new Goal({ name, dueDate });
+    await newGoal.save();
+    res.status(200).json({ message: "Meta agregada", goal: newGoal });
 });
 
-
 router.delete("/removeGoal/:id", async (req, res) => {
-  await Goal.findByIdAndDelete(req.params.id);
-  res.json({ message: "Meta eliminada" });
+    const { id } = req.params;
+    const deletedGoal = await Goal.findByIdAndDelete(id);
+
+    if (!deletedGoal) {
+        return res.status(400).json({ error: "Bad Request - ID inválido" });
+    }
+
+    res.status(200).json({ message: "Meta eliminada", goal: deletedGoal });
 });
 
 module.exports = router;
